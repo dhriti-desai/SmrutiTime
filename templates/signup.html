@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up - Smruti Time{% endblock %}
+{% block content %}
+  <h2>Sign Up</h2>
+  <form method="POST">
+    <label>First Name:</label>
+    <input type="text" name="first_name" placeholder="Enter your first name" required><br><br>
+    <label>Last Name:</label>
+    <input type="text" name="last_name" placeholder="Enter your last name" required><br><br>
+    <label>Preferred Pronouns:</label>
+    <input type="text" name="pronouns" placeholder="e.g., they/them, she/her, he/him" required><br><br>
+    <label>Age:</label>
+    <input type="number" name="age" placeholder="Enter your age" required><br><br>
+    <label>Email:</label>
+    <input type="email" name="email" placeholder="Enter your email" required><br><br>
+    <label>Password:</label>
+    <input type="password" name="password" placeholder="Enter your password" required><br><br>
+    <input type="submit" value="Sign Up">
+  </form>
+  <a href="{{ url_for('login') }}">Already have an account? Log in</a>
+{% endblock %}

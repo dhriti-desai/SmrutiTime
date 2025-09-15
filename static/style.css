@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #dfffe0;
+  overflow-x: hidden;
+  position: relative;
+}
+
+header {
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  font-size: 2rem;
+  background: linear-gradient(to right, #57e89b, #57cce8);
+  color: transparent;
+  font-weight: bold;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* ensure gradient text works in some browsers */
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+}
+
+nav .green { background: #b9fbc0; color: #14532d; }
+nav .orange { background: #ffd6a5; color: #78350f; }
+nav .blue { background: #a0c4ff; color: #1e3a8a; }
+nav .purple { background: #cdb4db; color: #6b21a8; }
+nav .pink { background: #ffc6d2; color: #831843; }
+
+.intro {
+  text-align: center;
+  padding: 2rem;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card.pink { background-color: #ffc6d2; }
+.card.blue { background-color: #a0c4ff; }
+.card.purple { background-color: #cdb4db; }
+
+/* Floating blobs in background */
+.background-blobs {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 20% 30%, #ffc6d2 10%, transparent 40%),
+    radial-gradient(circle at 80% 20%, #a0c4ff 10%, transparent 40%),
+    radial-gradient(circle at 50% 80%, #cdb4db 10%, transparent 40%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* --- Animations --- */
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out both;
+}
+
+.slide-up {
+  animation: slideUp 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+

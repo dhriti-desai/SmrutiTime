@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Activities - Memory Game{% endblock %}
+
+{% block content %}
+<h1>Memory Game</h1>
+<p>Match the pairs by clicking cards!</p>
+
+<div id="game">
+  <div class="memory-game">
+    <!-- Cards will be generated here by JS -->
+  </div>
+</div>
+
+<style>
+  .memory-game {
+    width: 480px;
+    height: 480px;
+    margin: 40px auto;
+    display: flex;
+    flex-wrap: wrap;
+    perspective: 1000px;
+  }
+
+  .memory-card {
+    width: calc(25% - 10px);
+    height: calc(25% - 10px);
+    margin: 5px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    cursor: pointer;
+  }
+
+  .memory-card.flip {
+    transform: rotateY(180deg);
+    cursor: default;
+  }
+
+  .memory-card .front,
+  .memory-card .back {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: absolute;
+    backface-visibility: hidden;
+  }
+
+  .memory-card .front {
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+
+  .memory-card .back {
+    background: #66ccff;
+    transform: rotateY(180deg);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cardsArray = [
+      { id: 1, content: "🍎" },
+      { id: 2, content: "🍎" },
+      { id: 3, content: "🍌" },
+      { id: 4, content: "🍌" },
+      { id: 5, content: "🍇" },
+      { id: 6, content: "🍇" },
+      { id: 7, content: "🍓" },
+      { id: 8, content: "🍓" }
+    ];
+
+    const gameContainer = document.querySelector('.memory-game');
+
+    let hasFlippedCard = false;
+    let lockBoard = false;
+    let firstCard, secondCard;
+
+    function shuffle(array) {
+      array.sort(() => 0.5 - Math.random());
+    }
+
+    function createCard(card) {
+      const cardElement = document.createElement('div');
+      cardElement.classList.add('memory-card');
+      cardElement.dataset.id = card.id;
+
+      const frontFace = document.createElement('div');
+      frontFace.classList.add('front');
+      frontFace.textContent = card.content;
+
+      const backFace = document.createElement('div');
+      backFace.classList.add('back');
+
+      cardElement.appendChild(frontFace);
+      cardElement.appendChild(backFace);
+
+      cardElement.addEventListener('click', flipCard);
+
+      return cardElement;
+    }
+
+    function flipCard() {
+      if (lockBoard) return;
+      if (this === firstCard) return;
+
+      this.classList.add('flip');
+
+      if (!hasFlippedCard) {
+        hasFlippedCard = true;
+        firstCard = this;
+        return;
+      }
+
+      secondCard = this;
+      checkForMatch();
+    }
+
+    function checkForMatch() {
+      let isMatch = firstCard.dataset.id === secondCard.dataset.id;
+
+      isMatch ? disableCards() : unflipCards();
+    }
+
+    function disableCards() {
+      firstCard.removeEventListener('click', flipCard);
+      secondCard.removeEventListener('click', flipCard);
+
+      resetBoard();
+    }
+
+    function unflipCards() {
+      lockBoard = true;
+
+      setTimeout(() => {
+        firstCard.classList.remove('flip');
+        secondCard.classList.remove('flip');
+
+        resetBoard();
+      }, 1000);
+    }
+
+    function resetBoard() {
+      [hasFlippedCard, lockBoard] = [false, false];
+      [firstCard, secondCard] = [null, null];
+    }
+
+    function initGame() {
+      shuffle(cardsArray);
+
+      cardsArray.forEach(card => {
+        const cardElement = createCard(card);
+        gameContainer.appendChild(cardElement);
+      });
+    }
+
+    initGame();
+  });
+</script>
+{% endblock %}

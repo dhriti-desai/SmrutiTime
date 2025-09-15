@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Journal History - Smruti Time{% endblock %}
+
+{% block content %}
+  <h1>Journal History</h1>
+  <a href="{{ url_for('journal') }}">← Back to Today's Journal</a>
+  
+  {% if entries %}
+    {% for entry in entries %}
+      <div class="journal-entry">
+        <h3>{{ entry.date.strftime('%B %d, %Y') }}</h3>
+        <div class="entry-content">{{ entry.content }}</div>
+        <small>Written on {{ entry.created_at.strftime('%I:%M %p') }}</small>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No journal entries yet. Start writing!</p>
+  {% endif %}
+{% endblock %}

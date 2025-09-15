@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Smruti Time{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="background-blobs"></div>
+
+  <div style="background: linear-gradient(45deg, #ffb3ba, #bae1ff, #baffc9, #ffffba); width: 100%; padding: 30px 0; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <div style="text-align: center;">
+      <h1 style="font-size: 42px; font-weight: bold; color: #555; margin: 0; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); letter-spacing: 1px;">SMRUTI TIME</h1>
+    </div>
+  </div>
+
+  <header>
+
+    <nav>
+      <a href="{{ url_for('home') }}" class="green">🏠 Home</a>
+      <a href="{{ url_for('journal') }}" class="orange">📓 Journal</a>
+      <a href="{{ url_for('smruti') }}" class="blue">🧠 Smruti</a>
+      <a href="{{ url_for('login') }}" class="pink">🔒 Log In</a>
+    </nav>
+  </header>
+  
+  {% if session.get('logged_in') %}
+    <div style="position: absolute; top: 10px; right: 20px; background: rgba(255,255,255,0.9); padding: 8px 15px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">Welcome, {{ session.get('user_name', 'User') }}!</div>
+  {% endif %}
+
+
+
+  <main style="max-width: 800px; margin: 0 auto; padding: 20px; text-align: center;">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
